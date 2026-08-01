@@ -5,13 +5,13 @@ import "./globals.css";
 // design.md: Archivo es el sustituto oficial de Roc Grotesk; la jerarquía va por
 // peso (400 → 900), no por familia. Geist Mono para códigos, ids y montos.
 const archivo = Archivo({
-  variable: "--font-sans",
+  variable: "--font-archivo",
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-mono",
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 

@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // `/api/skill/<name>` lee los SKILL.md de disco: hay que incluirlos en el
+  // trace o no existen en la función desplegada.
+  outputFileTracingIncludes: {
+    "/api/skill/**": ["./skills/**/*.md"],
+    "/api/agents": ["./skills/**/*.md"],
+  },
 };
 
 export default nextConfig;
