@@ -5,6 +5,7 @@ import { DefaultChatTransport } from "ai";
 import { useEffect, useRef, useState } from "react";
 
 import { PERSONAS } from "@/lib/personas";
+import { portablePrompt } from "@/lib/portable";
 
 interface Memory {
 	city?: string;
@@ -34,9 +35,23 @@ const ACTS = [
 		body: (
 			<>
 				Primero te veo el material — un par de preguntas — y de ahí pego.{" "}
-				<b>Sin avisar y sin suavizarlo después.</b> Así es el formato.
+				<b>Sin avisar y sin suavizarlo después.</b> Así es el formato de La
+				Logia: se roastea después de ver el material del otro.
 			</>
 		),
+	},
+	{
+		title: "Eliges contra quién",
+		body: (
+			<>
+				No peleas contra un robot genérico. Escoges a un comediante de la
+				cartelera y voy con su estilo: Murillo se destruye a sí mismo antes de
+				destruirte, Mateus te trata como noticia de la semana, Bart te da los
+				peores consejos con absoluta seguridad.{" "}
+				<b>Cada uno pega distinto.</b>
+			</>
+		),
+		note: "8 rivales",
 	},
 	{
 		title: "Compites",
@@ -72,25 +87,14 @@ const ACTS = [
 
 const INSTALLS = [
 	{
-		id: "claude",
-		label: "Claude Code",
-		hint: "También sirve en Cursor, Windsurf y Cline. Usa ~/.claude/skills para dejarlo global.",
-		code: `mkdir -p .claude/skills/freeticket-roast
-curl -s ${BASE}/api/skill/freeticket-roast \\
-  -o .claude/skills/freeticket-roast/SKILL.md`,
-	},
-	{
 		id: "chatgpt",
-		label: "ChatGPT / Codex",
-		hint: "Sin instalar nada: se apunta desde tu AGENTS.md y el agente lo lee cuando hace falta.",
-		code: `echo "Para roastear y vender shows de FreeTicket, lee \\
-${BASE}/api/skill/freeticket-roast" >> AGENTS.md`,
+		label: "ChatGPT",
+		hint: "Pégalo en un chat nuevo. Como ChatGPT ya sabe cosas de ti, el roast le sale con material que este sitio no tiene — y te pide permiso antes de usarlo.",
 	},
 	{
-		id: "agente",
-		label: "Que lo haga tu agente",
-		hint: "Un documento en texto plano con el protocolo completo, igual que hace FreeTicket en /api/apply/agents.",
-		code: `curl -s ${BASE}/api/agents`,
+		id: "claude",
+		label: "Claude",
+		hint: "El mismo texto funciona igual en Claude o en Gemini. Si tu asistente tiene memoria, la va a usar en tu contra.",
 	},
 ];
 
@@ -170,6 +174,7 @@ export default function Page() {
 
 	const busy = status === "submitted" || status === "streaming";
 	const active = INSTALLS.find((i) => i.id === tab) ?? INSTALLS[0];
+	const PROMPT = portablePrompt();
 
 	function send(text: string) {
 		if (!text.trim() || busy) return;
@@ -179,7 +184,7 @@ export default function Page() {
 
 	async function copy() {
 		try {
-			await navigator.clipboard.writeText(active.code.replace(/\\\n\s*/g, ""));
+			await navigator.clipboard.writeText(PROMPT);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 1600);
 		} catch {
@@ -363,12 +368,14 @@ export default function Page() {
 			<section className="stub">
 				<h2>Llévatelo puesto</h2>
 				<p className="lead">
-					La LogIA no vive solo acá. Es una skill en markdown plano: se instala
-					en tu agente y sigue funcionando en tu terminal, con la misma
-					cartelera en vivo y las mismas reglas.
+					Copia esto y pégalo en tu asistente. Es la misma LogIA, pero con una
+					ventaja: <b>tu asistente ya sabe cosas de ti</b> — de qué te quejas
+					siempre, qué plan llevas meses posponiendo, a qué hora escribes. Te
+					pide permiso una vez y lo usa en tu contra. Nada de eso sale de tu
+					chat.
 				</p>
 
-				<div className="tabs" role="tablist" aria-label="Dónde instalarlo">
+				<div className="tabs" role="tablist" aria-label="Dónde pegarlo">
 					{INSTALLS.map((i) => (
 						<button
 							type="button"
@@ -385,12 +392,22 @@ export default function Page() {
 
 				<div className="snippet">
 					<p>{active.hint}</p>
-					<pre>
-						<code>{active.code}</code>
+					<pre className="prompt">
+						<code>{PROMPT}</code>
 					</pre>
-					<button type="button" className="copy" onClick={copy}>
-						{copied ? "Copiado" : "Copiar"}
-					</button>
+					<div className="stub-actions">
+						<button type="button" className="copy" onClick={copy}>
+							{copied ? "Copiado" : "Copiar el prompt"}
+						</button>
+						<a
+							className="plain"
+							href="/api/prompt"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Verlo en crudo
+						</a>
+					</div>
 				</div>
 			</section>
 

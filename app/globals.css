@@ -363,3 +363,17 @@ footer a:hover { text-decoration: underline; }
   box-shadow: var(--glow-yellow);
 }
 .corner-note { margin: 10px 0 0; font-size: .6875rem; line-height: 1.5; color: #6f6f6f; max-width: 62ch; }
+
+/* El prompt para pegar: largo, así que scrollea en su propia caja. */
+.snippet pre.prompt {
+  max-height: 300px; overflow: auto;
+  white-space: pre-wrap; word-break: break-word;
+  font-size: .75rem; line-height: 1.6;
+}
+.stub-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+.stub-actions .copy { margin-top: 0; }
+.stub-actions .plain {
+  font-size: .75rem; color: var(--muted-foreground); text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+.stub-actions .plain:hover { color: var(--foreground); border-color: var(--muted-foreground); }

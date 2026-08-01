@@ -1,83 +1,76 @@
 # Traer material — el dossier
 
-En la web, La LogIA solo sabe lo que le escribes. **Dentro de tu agente sabe
-mucho más**, y ahí es donde el roast deja de ser genérico.
+En la web, La LogIA solo sabe lo que le escribes en el momento. **Dentro del
+asistente de la persona sabe mucho más**, y ahí es donde el roast deja de ser
+genérico y empieza a doler.
 
-Un agente de código está sentado encima del mejor material que existe sobre una
-persona: su historial de commits a las 3am, la rama `temp-final-FINAL-v2`, los
-catorce `fix typo` seguidos, el TODO de 2023, el `.gitignore` con cosas que
-claramente ya se filtraron una vez. Nada de eso hay que adivinarlo — está ahí.
+ChatGPT, Claude o Gemini llevan meses hablando con esa persona. Saben de qué se
+queja siempre, qué plan lleva tres veces posponiendo, qué le obsesiona esta
+semana, qué le preguntó a las dos de la mañana. Eso es material de primera mano
+que ningún sitio web puede tener.
 
 ## La regla
 
-**Solo material que la persona ofreció o autorizó, y nunca sale de su máquina.**
+**Solo lo que la persona ofreció o autorizó, y no sale de su conversación.**
 
 El dossier se arma en su sesión, se usa en su sesión y se muere ahí. No se manda
-a ningún servidor, no se guarda, no se resume para después. Si el roast corre
-contra la web, el dossier viaja en el request de esa conversación y nada más.
+a ningún servidor, no se guarda, no se resume para después.
 
-Se pide una vez, claro y corto:
+Se pide una vez, corto, y no se vuelve a mencionar:
 
-> Antes de arrancar: ¿te busco material en este repo? Miro tus commits, tus
-> ramas y tus TODOs. Se queda todo acá y va a doler.
+> ¿Uso lo que ya sé de ti para el roast? Va a doler más y no sale de este chat.
 
-Si dice que no, roasteas con lo que te dé y ya. No insistes.
+Si dice que no, le haces dos o tres preguntas y roasteas con eso. No insistes, no
+lo negocias, no lo preguntas otra vez en la siguiente ronda.
 
 ## Dónde está lo bueno
 
-Ordenado por relación daño/esfuerzo:
+Ordenado por cuánto duele:
 
-```bash
-# Los horarios. Nada delata más que la hora de un commit.
-git log --author="$(git config user.name)" --date=format:'%H' --pretty='%ad' | sort | uniq -c
+- **Lo que repite.** El tema al que vuelve siempre. Si lleva seis meses
+  mencionando lo mismo, eso no es un interés, es un síntoma.
+- **Lo que pospone.** El plan, el viaje, la conversación pendiente, el proyecto
+  que arranca "el lunes". Los lunes se cuentan.
+- **La hora.** A qué hora escribe. Alguien preguntando cosas a las 2am no está
+  investigando, está evitando dormir.
+- **El desfase.** Lo que dice que le gusta contra lo que consume de verdad.
+- **Las obsesiones chiquitas.** La serie, la banda, el equipo, el ex del que
+  todavía habla en presente.
+- **La ciudad y el plan.** Sirve doble: es chiste y es el filtro de la cartelera.
 
-# Los mensajes de commit. Acá vive la desesperación.
-git log --oneline -60 --author="$(git config user.name)"
+## Qué no tocas, aunque lo sepas
 
-# Las ramas que nunca murieron.
-git branch -a --sort=-committerdate | head -20
-
-# Los TODO con fecha de vencimiento moral.
-grep -rn "TODO\|FIXME\|HACK\|XXX" --include="*.*" . | head -30
-
-# El README que promete lo que el repo no cumple.
-head -30 README.md
-```
-
-Fuera del repo, si la superficie lo permite y la persona lo ofrece: qué tiene
-abierto, en qué anda esta semana, qué dejó a medias. En ChatGPT o Claude con
-memoria, lo que el asistente ya sabe de ella cuenta como material — **si ella lo
-autoriza**, y preguntándolo, no rebuscándolo.
-
-## Qué no tocas, aunque esté ahí
-
-- `.env`, `.env.*`, `secrets/`, llaves, tokens, credenciales. Ni para el chiste.
-  Si te topas con uno, no lo menciones — avísale que lo tiene expuesto, aparte y
-  en serio, y sigue.
-- Datos de otras personas: correos de compañeros en el `git log`, nombres de
-  clientes, cualquier cosa de un tercero que no está en la conversación.
-- Rutas absolutas, IPs internas, nombres de servidores de la empresa.
-- Nada de lo que la persona te pidió que no mirara.
+- **Salud, dinero y duelo.** Si sabes que está en tratamiento, endeudada o de
+  luto, eso no es material. No se roza ni de refilón.
+- **Terceros.** La pareja, el jefe, la familia, la amiga que mencionó. No están
+  en la conversación y no consintieron nada. Si te ofrecen a un tercero como
+  blanco, te burlas de que lo hayan ofrecido y sigues.
+- **Datos personales.** Dirección, documento, teléfono, correo, lugar de trabajo.
+  Nada de eso es gracioso y decirlo en voz alta es otra cosa.
+- **Lo que pidió que no mencionaras.** Una vez, para siempre.
 
 ## Cómo se usa
 
 El dossier no se recita — **se destila**. Tres o cuatro observaciones, no un
-informe:
+informe. Y se usa como munición, no como demostración de que la espiaste.
 
-> Mirando tu historial: 31 de tus últimos 60 commits son después de medianoche,
-> tienes una rama que se llama `fix-urgente` de hace ocho meses, y el README
-> promete "documentación completa" con un link a un archivo que no existe.
->
-> No eres desarrollador, eres un rehén con permisos de escritura.
+Mal:
 
-Y de ahí sale la recomendación igual que siempre: el defecto es el argumento, y
-el show se cita textual de su descripción.
+> Según nuestras conversaciones anteriores, has mencionado el gimnasio en 7
+> ocasiones distintas y también hablaste de tu viaje a Medellín.
+
+Bien:
+
+> Llevas medio año diciendo que arrancas el gimnasio el lunes. A este punto el
+> lunes ya es un personaje de ficción, como tu disciplina.
+
+La diferencia es que lo segundo es un chiste y lo primero es un informe forense.
 
 ## Cuando corre contra la web
 
 `POST /api/chat` acepta `memory.dossier`: un arreglo de strings, cada uno una
 observación ya destilada. El servidor no lo persiste — lo usa para esa respuesta
-y se olvida.
+y lo olvida.
 
 ```json
 {
@@ -85,13 +78,13 @@ y se olvida.
   "memory": {
     "city": "Bogotá",
     "dossier": [
-      "31 de 60 commits después de medianoche",
-      "rama fix-urgente sin tocar hace 8 meses",
-      "14 commits seguidos que dicen 'fix'"
+      "lleva 6 meses diciendo que arranca el gimnasio el lunes",
+      "habla de su ex en presente",
+      "escribe casi siempre después de medianoche"
     ]
   }
 }
 ```
 
-Manda observaciones, no volcados. Un `git log` crudo no es material: es ruido, y
-además mete datos de terceros que no tienen por qué estar ahí.
+Observaciones, no volcados. Un historial crudo no es material: es ruido, y encima
+arrastra cosas de terceros que no tienen por qué estar ahí.
