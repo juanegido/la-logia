@@ -112,14 +112,18 @@ const tools = {
 };
 
 export async function POST(req: Request) {
-	const { messages, memory }: { messages: UIMessage[]; memory?: Memory } =
+	const {
+		messages,
+		memory,
+		persona,
+	}: { messages: UIMessage[]; memory?: Memory; persona?: string } =
 		await req.json();
 
 	const { model } = resolveModel();
 
 	const result = streamText({
 		model,
-		system: systemPrompt(memory ?? {}),
+		system: systemPrompt(memory ?? {}, persona),
 		messages: await convertToModelMessages(messages),
 		tools,
 		stopWhen: isStepCount(6),

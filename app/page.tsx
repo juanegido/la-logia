@@ -4,6 +4,8 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useEffect, useRef, useState } from "react";
 
+import { PERSONAS } from "@/lib/personas";
+
 interface Memory {
 	city?: string;
 	interests?: string[];
@@ -96,6 +98,8 @@ export default function Page() {
 	const [input, setInput] = useState("");
 	const [memory, setMemory] = useState<Memory>({});
 	const [tab, setTab] = useState(INSTALLS[0].id);
+	const [persona, setPersona] = useState("libre");
+	const personaRef = useRef("libre");
 	const [copied, setCopied] = useState(false);
 	const memRef = useRef<Memory>({});
 	const bottom = useRef<HTMLDivElement>(null);
@@ -118,7 +122,11 @@ export default function Page() {
 		transport: new DefaultChatTransport({
 			api: "/api/chat",
 			prepareSendMessagesRequest: ({ messages }) => ({
-				body: { messages, memory: memRef.current },
+				body: {
+					messages,
+					memory: memRef.current,
+					persona: personaRef.current,
+				},
 			}),
 		}),
 	});
@@ -239,6 +247,44 @@ export default function Page() {
 							))}
 						</div>
 					)}
+				</div>
+
+				<div className="corner" role="group" aria-label="Contra quién peleas">
+					<span className="corner-label">Rival</span>
+					<div className="fighters">
+						<button
+							type="button"
+							className="fighter"
+							aria-pressed={persona === "libre"}
+							onClick={() => {
+								setPersona("libre");
+								personaRef.current = "libre";
+							}}
+						>
+							La LogIA
+						</button>
+						{PERSONAS.map((p) => (
+							<button
+								type="button"
+								className="fighter"
+								key={p.id}
+								aria-pressed={persona === p.id}
+								title={`${p.show} — ${p.tag}`}
+								onClick={() => {
+									setPersona(p.id);
+									personaRef.current = p.id;
+								}}
+							>
+								{p.name}
+								<em>{p.tag}</em>
+							</button>
+						))}
+					</div>
+					<p className="corner-note">
+						Imitación declarada, no suplantación. Cada estilo sale de la
+						descripción del show de esa persona en la cartelera, y cada uno
+						vende el suyo.
+					</p>
 				</div>
 
 				<div className="thread">

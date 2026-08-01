@@ -327,3 +327,39 @@ footer a:hover { text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* ── La esquina: contra quién peleas ────────────────────────────────── */
+
+.corner {
+  padding: 14px 18px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #0b0c0e;
+}
+.corner-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: .5625rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 9px;
+}
+.fighters { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 3px; scrollbar-width: thin; }
+.fighter {
+  flex: none;
+  font: inherit; font-size: .8125rem; font-weight: 700; cursor: pointer;
+  display: flex; flex-direction: column; gap: 1px; align-items: flex-start;
+  background: transparent; color: var(--muted-foreground);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 8px 13px; min-height: 44px; text-align: left;
+  transition: color 160ms var(--ease), border-color 160ms var(--ease), box-shadow 200ms var(--ease);
+}
+.fighter em {
+  font-style: normal; font-weight: 400;
+  font-family: var(--font-mono); font-size: .5625rem;
+  letter-spacing: .08em; text-transform: uppercase; opacity: .7;
+}
+.fighter:hover { color: var(--foreground); border-color: var(--muted-foreground); }
+.fighter[aria-pressed="true"] {
+  color: var(--primary-foreground); background: var(--primary); border-color: var(--primary);
+  box-shadow: var(--glow-yellow);
+}
+.corner-note { margin: 10px 0 0; font-size: .6875rem; line-height: 1.5; color: #6f6f6f; max-width: 62ch; }

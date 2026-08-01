@@ -25,6 +25,16 @@ export const SKILLS: SkillMeta[] = [
 		file: "skills/freeticket-roast/SKILL.md",
 	},
 	{
+		name: "freeticket-roast-personas",
+		summary: "El roster: contra quién peleas y de dónde sale cada estilo.",
+		file: "skills/freeticket-roast/references/personas.md",
+	},
+	{
+		name: "freeticket-roast-material",
+		summary: "Cómo traer material del entorno del usuario, con permiso y sin que salga de su máquina.",
+		file: "skills/freeticket-roast/references/material.md",
+	},
+	{
 		name: "freeticket-comprar",
 		summary: "El cierre: cartelera, stock en vivo y link de pago.",
 		file: "skills/freeticket-comprar/SKILL.md",

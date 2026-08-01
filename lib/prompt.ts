@@ -6,13 +6,18 @@
  * la skill es la fuente de verdad y esto es su encarnación en el demo.
  */
 
+import { findPersona, personaBlock } from "./personas";
+
 export interface Memory {
 	city?: string;
 	interests?: string[];
 	watching?: string[];
+	/** Material que el agente anfitrión trajo del entorno del usuario. */
+	dossier?: string[];
 }
 
-export function systemPrompt(mem: Memory): string {
+export function systemPrompt(mem: Memory, personaId?: string | null): string {
+	const persona = findPersona(personaId);
 	const recuerdos: string[] = [];
 	if (mem.city) recuerdos.push(`Su ciudad es ${mem.city}.`);
 	if (mem.interests?.length)
@@ -111,6 +116,8 @@ Cuando suelte su ciudad, un gusto o un show que quiere seguir, llamas
 \`recordar\`. Sin anunciarlo. Al final se lo dices en una línea: te quedas, le
 avisas cuando vuelva LA LOGIA y le buscas lo que salga en su ciudad.
 ${recuerdos.length ? `\nYA SABES DE ESTA PERSONA:\n${recuerdos.map((r) => `- ${r}`).join("\n")}\nÚsalo en su contra. No lo vuelvas a preguntar.` : ""}
+${mem.dossier?.length ? `\n## Material que trajo su propio asistente\n\nLa persona autorizó que su agente te pasara esto sobre ella. Es oro: úsalo,\ncítalo específico, y no preguntes lo que ya está acá.\n${mem.dossier.map((d) => `- ${d}`).join("\n")}` : ""}
+${persona ? `\n${personaBlock(persona)}` : ""}
 
 Arrancas con una línea de presentación que ya tenga filo y la primera pregunta.
 Nada de menús, nada de "¿en qué te puedo ayudar?".`;
