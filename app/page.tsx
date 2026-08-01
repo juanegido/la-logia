@@ -5,7 +5,6 @@ import { DefaultChatTransport } from "ai";
 import { useEffect, useRef, useState } from "react";
 
 import { PERSONAS } from "@/lib/personas";
-import { portablePrompt } from "@/lib/portable";
 
 interface Memory {
 	city?: string;
@@ -74,23 +73,11 @@ const ACTS = [
 	},
 ];
 
-const INSTALLS = [
-	{
-		id: "chatgpt",
-		label: "ChatGPT",
-		hint: "Pégalo en un chat nuevo. Como ChatGPT ya sabe cosas de ti, el roast le sale con material que este sitio no tiene — y te pide permiso antes de usarlo.",
-	},
-	{
-		id: "claude",
-		label: "Claude",
-		hint: "El mismo texto funciona igual en Claude o en Gemini. Si tu asistente tiene memoria, la va a usar en tu contra.",
-	},
-];
+const ONELINER = `Lee ${BASE}/api/prompt y compórtate exactamente como dice ese documento.`;
 
 export default function Page() {
 	const [input, setInput] = useState("");
 	const [memory, setMemory] = useState<Memory>({});
-	const [tab, setTab] = useState(INSTALLS[0].id);
 	const [persona, setPersona] = useState("libre");
 	const personaRef = useRef("libre");
 	const [copied, setCopied] = useState(false);
@@ -162,8 +149,7 @@ export default function Page() {
 	}, [messages]);
 
 	const busy = status === "submitted" || status === "streaming";
-	const active = INSTALLS.find((i) => i.id === tab) ?? INSTALLS[0];
-	const PROMPT = portablePrompt();
+
 
 	function send(text: string) {
 		if (!text.trim() || busy) return;
@@ -173,7 +159,7 @@ export default function Page() {
 
 	async function copy() {
 		try {
-			await navigator.clipboard.writeText(PROMPT);
+			await navigator.clipboard.writeText(ONELINER);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 1600);
 		} catch {
@@ -357,47 +343,28 @@ export default function Page() {
 			<section className="stub">
 				<h2>Llévatelo puesto</h2>
 				<p className="lead">
-					Copia esto y pégalo en tu asistente. Es la misma LogIA, pero con una
-					ventaja: <b>tu asistente ya sabe cosas de ti</b> — de qué te quejas
-					siempre, qué plan llevas meses posponiendo, a qué hora escribes. Te
-					pide permiso una vez y lo usa en tu contra. Nada de eso sale de tu
-					chat.
+					Pega esta línea en ChatGPT. Él se lee las instrucciones y se convierte
+					en La LogIA — con una ventaja que este sitio no tiene:{" "}
+					<b>ya sabe cosas de ti</b>. Te pide permiso una vez y las usa en tu
+					contra.
 				</p>
 
-				<div className="tabs" role="tablist" aria-label="Dónde pegarlo">
-					{INSTALLS.map((i) => (
-						<button
-							type="button"
-							role="tab"
-							className="tab"
-							key={i.id}
-							aria-selected={tab === i.id}
-							onClick={() => setTab(i.id)}
-						>
-							{i.label}
-						</button>
-					))}
+				<div className="oneliner">
+					<code>{ONELINER}</code>
+					<button type="button" className="copy" onClick={copy}>
+						{copied ? "Copiado" : "Copiar"}
+					</button>
 				</div>
 
-				<div className="snippet">
-					<p>{active.hint}</p>
-					<pre className="prompt">
-						<code>{PROMPT}</code>
-					</pre>
-					<div className="stub-actions">
-						<button type="button" className="copy" onClick={copy}>
-							{copied ? "Copiado" : "Copiar el prompt"}
-						</button>
-						<a
-							className="plain"
-							href="/api/prompt"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Verlo en crudo
-						</a>
-					</div>
-				</div>
+				<p className="paths">
+					<b>Claude o Gemini:</b> la misma línea, igual.
+					<br />
+					<b>Agentes de código:</b>{" "}
+					<a href="/api/agents" target="_blank" rel="noopener noreferrer">
+						<code>curl -s {BASE}/api/agents</code>
+					</a>{" "}
+					trae el protocolo de instalación.
+				</p>
 			</section>
 
 			<footer>

@@ -280,32 +280,7 @@ html, body {
 }
 .stub .lead { margin: 10px 0 0; color: var(--muted-foreground); font-size: .9375rem; max-width: 58ch; }
 
-.tabs { display: flex; gap: 7px; margin: 20px 0 0; flex-wrap: wrap; }
-.tab {
-  font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer;
-  letter-spacing: .04em; text-transform: uppercase;
-  background: transparent; color: var(--muted-foreground);
-  border: 1px solid var(--border); border-radius: 9999px;
-  padding: 8px 15px; min-height: 38px;
-  transition: color 160ms var(--ease), border-color 160ms var(--ease);
-}
-.tab[aria-selected="true"] {
-  color: var(--primary-foreground); background: var(--primary);
-  border-color: var(--primary);
-}
-.tab:not([aria-selected="true"]):hover { color: var(--foreground); border-color: var(--muted-foreground); }
 
-.snippet { margin: 16px 0 0; }
-.snippet p { margin: 0 0 9px; font-size: .8125rem; color: var(--muted-foreground); }
-.snippet pre {
-  margin: 0; padding: 15px 17px;
-  background: var(--background);
-  border: 1px solid var(--border); border-radius: var(--radius-md);
-  overflow-x: auto;
-  font-family: var(--font-mono); font-size: .78125rem; line-height: 1.65;
-  color: #d7d7d7;
-}
-.snippet pre b { color: var(--ft-yellow); font-weight: 400; }
 .copy {
   margin-top: 11px; font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer;
   background: transparent; color: var(--ft-teal);
@@ -365,15 +340,32 @@ footer a:hover { text-decoration: underline; }
 .corner-note { margin: 10px 0 0; font-size: .6875rem; line-height: 1.5; color: #6f6f6f; max-width: 62ch; }
 
 /* El prompt para pegar: largo, así que scrollea en su propia caja. */
-.snippet pre.prompt {
-  max-height: 300px; overflow: auto;
-  white-space: pre-wrap; word-break: break-word;
-  font-size: .75rem; line-height: 1.6;
+
+/* Llévatelo puesto: una línea, no un volcado de código. */
+.oneliner {
+  margin: 20px 0 0;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: var(--background);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
 }
-.stub-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
-.stub-actions .copy { margin-top: 0; }
-.stub-actions .plain {
-  font-size: .75rem; color: var(--muted-foreground); text-decoration: none;
-  border-bottom: 1px solid var(--border);
+.oneliner code {
+  flex: 1; min-width: 240px;
+  font-family: var(--font-mono); font-size: .8125rem; line-height: 1.6;
+  color: #d7d7d7; word-break: break-word;
 }
-.stub-actions .plain:hover { color: var(--foreground); border-color: var(--muted-foreground); }
+.copy {
+  flex: none;
+  font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer;
+  background: var(--primary); color: var(--primary-foreground);
+  border: 0; border-radius: 9999px; padding: 9px 18px; min-height: 38px;
+  transition: box-shadow 200ms var(--ease), transform 120ms var(--spring);
+}
+.copy:hover { box-shadow: var(--glow-yellow); }
+.copy:active { transform: scale(.98); }
+
+.paths { margin: 16px 0 0; font-size: .8125rem; line-height: 1.9; color: var(--muted-foreground); }
+.paths b { color: var(--foreground); font-weight: 700; }
+.paths code { font-family: var(--font-mono); font-size: .75rem; }
+.paths a { color: var(--ft-teal); text-decoration: none; }
+.paths a:hover { text-decoration: underline; }
