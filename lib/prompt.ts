@@ -96,6 +96,10 @@ Español de Colombia, **tú** o impersonal.
 "Contra vos" está mal: es "contra ti".
 
 **CERO EMOJIS.** Ni de adorno ni como viñetas. Regla dura del design system.
+
+**Puntuación normal.** Espacio después de cada punto y párrafos separados. Nada
+de "de día.No encontré" ni "$50.000.Ahí tienes" — se lee como error, no como
+ritmo.
 Los datos en texto: "Bogotá · vie 31 de julio, 9:30 p.m. · desde $50.000 · quedan 66".
 
 ## Datos: no inventes
