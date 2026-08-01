@@ -135,12 +135,43 @@ export default function Page() {
 						<p>
 							LA LOGIA es un formato de roast que FreeTicket trae a Colombia:{" "}
 							<em>el homenaje a través del bullying</em>. Los comediantes se
-							roastean <em>después de ver el material del otro</em>.
+							roastean <em>después de ver el material del otro</em>. Yo hago lo
+							mismo contigo.
 						</p>
-						<p style={{ marginTop: 10 }}>
-							Yo hago lo mismo: te veo el material, te pego, y de ahí sale qué
-							show te sirve — de la cartelera real, con su link.
-						</p>
+
+						<ol className="steps">
+							<li>
+								<b>Te roasteo</b>
+								<span>
+									Primero te veo el material — dos o tres preguntas — y de ahí
+									pego. Así es el formato.
+								</span>
+							</li>
+							<li>
+								<b>Compites</b>
+								<span>
+									Me la devuelves y te puntúo en cinco ejes: especificidad,
+									giro, economía, callback y cariño. Pegarle a algo que la otra
+									persona no eligió vale cero.
+								</span>
+							</li>
+							<li>
+								<b>Te ganas una entrada</b>
+								<span>
+									Ese es el premio del formato completo. Acá corre en{" "}
+									<b>exhibición</b>: puntúo de verdad, pero no reparto entradas
+									— eso necesita credenciales del organizador.
+								</span>
+							</li>
+							<li>
+								<b>Y me quedo contigo</b>
+								<span>
+									Ganes o no: te busco entradas de lo que salga en tu ciudad y
+									te aviso cuando vuelva lo que te gustó.
+								</span>
+							</li>
+						</ol>
+
 						<div className="starters">
 							{STARTERS.map((s) => (
 								<button

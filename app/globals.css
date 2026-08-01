@@ -127,3 +127,36 @@ footer { padding: 0 0 26px; font-size: .75rem; color: var(--muted-foreground); l
 footer a { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* El concepto, en cuatro pasos: roast → compite → gana → me quedo. */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 4px 12px;
+  align-items: baseline;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 15px;
+}
+.steps li::before {
+  content: counter(step);
+  grid-row: 1 / span 2;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: .8125rem;
+  color: var(--primary);
+  line-height: 1.3;
+}
+.steps b { font-weight: 900; letter-spacing: -0.01em; color: var(--foreground); }
+.steps span { font-size: .875rem; line-height: 1.45; color: var(--muted-foreground); }
+.steps b + span { grid-column: 2; }
