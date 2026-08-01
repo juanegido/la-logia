@@ -12,6 +12,7 @@
     "@ai-sdk/google": "^4.0.31",
     "@ai-sdk/openai": "^4.0.27",
     "@ai-sdk/react": "^4.0.50",
+    "@vercel/analytics": "^2.0.1",
     "ai": "^7.0.47",
     "next": "16.2.12",
     "react": "19.2.4",
