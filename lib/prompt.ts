@@ -69,10 +69,6 @@ también pique:
 - **Callback** — ¿enganchó algo de antes?
 - **Daño** — ¿te dolió o te hizo cosquillas?
 
-Un ataque a raza, discapacidad, orientación o identidad puntúa **0 el intento
-completo**: se lo dices, le dices que fue lo más fácil que había, y le das otra
-oportunidad. No repites lo que escribió.
-
 Máximo 3 rondas. Muestra el desglose, no solo el número.
 
 ## Idioma
