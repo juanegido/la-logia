@@ -28,11 +28,17 @@ export interface Persona {
 	evidence: string;
 	/** Etiqueta corta para el selector. */
 	tag: string;
+	/** Término para `q=` en el catálogo. */
+	search: string;
+	/** Trozo del nombre del show, para descartar menciones ajenas. */
+	match: string;
 }
 
 export const PERSONAS: Persona[] = [
 	{
 		id: "murillo",
+		search: "Murillo",
+		match: "GORDO Y FEO",
 		name: "Gabriel Murillo",
 		show: "GORDO Y FEO",
 		slug: "gordo-y-feo-bogota",
@@ -44,6 +50,8 @@ export const PERSONAS: Persona[] = [
 	},
 	{
 		id: "mateus",
+		search: "Mateus",
+		match: "SEVERAS LOCAS",
 		name: "Diego Mateus",
 		show: "SEVERAS LOCAS",
 		slug: "severas-locas-agosto",
@@ -55,6 +63,8 @@ export const PERSONAS: Persona[] = [
 	},
 	{
 		id: "bart",
+		search: "Castiblanco",
+		match: "TERAPIA",
 		name: "Edwin Castiblanco Bart",
 		show: "¡QUÉ HPUTA TERAPIA!",
 		slug: "que-hputa-terapia-agosto-bogota",
@@ -66,6 +76,8 @@ export const PERSONAS: Persona[] = [
 	},
 	{
 		id: "velandia",
+		search: "Velandia",
+		match: "GORDCONSEJOS",
 		name: "Johana Velandia",
 		show: "GORDCONSEJOS",
 		slug: "gordconsejos-bogota",
@@ -77,6 +89,8 @@ export const PERSONAS: Persona[] = [
 	},
 	{
 		id: "vela",
+		search: "Samuel Vela",
+		match: "SIN NOVIA",
 		name: "Samuel Vela",
 		show: "31 Y TODAVÍA SIN NOVIA",
 		slug: "31-y-todavia-sin-novia-bogota",
@@ -88,6 +102,8 @@ export const PERSONAS: Persona[] = [
 	},
 	{
 		id: "chimuelo",
+		search: "BEATS",
+		match: "BEATS",
 		name: "Chimuelo",
 		show: "BEATS",
 		slug: "beats-bogota",
@@ -99,6 +115,8 @@ export const PERSONAS: Persona[] = [
 	},
 	{
 		id: "nadapersonal",
+		search: "Nada Personal",
+		match: "NADA PERSONAL",
 		name: "Lina Adarme y Mauricio Muñoz",
 		show: "NADA PERSONAL",
 		slug: "nada-personal-bogota",
@@ -110,6 +128,8 @@ export const PERSONAS: Persona[] = [
 	},
 	{
 		id: "torres",
+		search: "Andrés Torres",
+		match: "HAGAME CASO",
 		name: "Andrés Torres",
 		show: "¡HÁGAME CASO!",
 		slug: "no-me-dejan-mentir-agosto",
@@ -130,20 +150,28 @@ export function findPersona(id?: string | null): Persona | null {
 
 /** El bloque que se le inyecta al system prompt cuando eligen rival. */
 export function personaBlock(p: Persona): string {
-	return `## Contra quién estás peleando
+	return `## Esta ronda la peleas como ${p.name}
 
-Esta ronda la peleas **al estilo de ${p.name}**, de su show ${p.show}.
+**Eres ${p.name}.** No "vas de" ni "imitas": entras al escenario como él y
+hablas en primera persona, con su show ${p.show} en el bolsillo. Los comediantes
+del roster dieron permiso para esto.
 
-Es una **imitación declarada**, no una suplantación: preséntate como
-"vas de ${p.name}", nunca como si lo fueras. No le pongas en la boca opiniones
-reales sobre nada ni sobre nadie, no hables de su vida privada, y no digas nada
-que un tercero pudiera leer como declaración suya. Es un homenaje entre colegas
-— exactamente lo que es La Logia.
+Lo que sí sigue prohibido, porque no es cuestión de permiso sino de exactitud:
+no le inventes hechos de su vida real, no le atribuyas opiniones sobre personas
+o temas reales, y no hables de su vida privada. Su personaje escénico, todo; su
+biografía, nada.
 
-**Su ángulo:** ${p.angle}
+**Cómo pega:** ${p.angle}
 
-**Su propia descripción, textual:** "${p.evidence}"
+**Su show, en sus propias palabras:** "${p.evidence}"
 
-Pega desde ahí. Y cuando llegue el giro, si su show le sirve a esta persona,
-recomiéndaselo — es su show. Si no le sirve, recomienda el que sí, sin forzar.`;
+Pega desde ahí, con esa voz.
+
+## Cómo cierras
+
+Al final del roast, **vendes tu propio show**: llama a \`proximo_del_rival\` para
+traer tu próxima fecha con stock real y ciérralo con ciudad, fecha, precio y
+link. Si la tool devuelve que no tienes fecha, lo dices — "ahora mismo no estoy
+en cartelera" — y recomiendas el show que sí le sirva a esta persona. Nunca te
+inventes una fecha tuya.`;
 }

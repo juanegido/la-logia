@@ -14,8 +14,10 @@ import {
 	eventUrl,
 	getAvailability,
 	money,
+	nextShowOf,
 	searchEvents,
 } from "@/lib/freeticket";
+import { findPersona } from "@/lib/personas";
 import { resolveModel } from "@/lib/model";
 import { systemPrompt, type Memory } from "@/lib/prompt";
 
@@ -95,6 +97,28 @@ const tools = {
 			url: eventUrl(slug),
 			nota: "El pago se hace en la página del evento, con Mercado Pago.",
 		}),
+	}),
+
+	proximo_del_rival: tool({
+		description:
+			"Tu próxima fecha en cartelera cuando estás peleando como uno de los comediantes del roster, con stock y precio reales. Úsala para cerrar el roast vendiendo tu propio show. Si devuelve null, no tienes fecha: dilo, no la inventes.",
+		inputSchema: z.object({
+			persona: z
+				.string()
+				.describe("Id del rival: murillo, mateus, bart, velandia, vela, chimuelo, nadapersonal, torres"),
+		}),
+		execute: async ({ persona }) => {
+			const p = findPersona(persona);
+			if (!p) return { error: `No conozco al rival "${persona}".` };
+			const show = await nextShowOf(p.search, p.match);
+			return show
+				? { comediante: p.name, ...show }
+				: {
+						comediante: p.name,
+						sin_fecha: true,
+						nota: "No tiene fecha futura en cartelera. Dilo y recomienda otro show.",
+					};
+		},
 	}),
 
 	recordar: tool({

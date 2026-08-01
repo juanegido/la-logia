@@ -158,3 +158,65 @@ export function dateInTz(iso: string, tz: string): string {
 export function eventUrl(slug: string): string {
 	return `https://appfreeticket.com/eventos/${encodeURIComponent(slug)}`;
 }
+
+const strip = (s: string) =>
+	s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toUpperCase();
+
+/**
+ * El próximo show de un comediante concreto, con su stock.
+ *
+ * Dos pasos porque `q=` sola no basta: a Chimuelo lo nombran en la descripción
+ * de otros veinte shows ("de acá salieron revelaciones como Chimuelo"), así que
+ * después de buscar se filtra por el nombre del show. Si no tiene fecha futura,
+ * devuelve null y el agente lo dice en vez de inventarla.
+ */
+export async function nextShowOf(
+	search: string,
+	match: string,
+): Promise<{
+	slug: string;
+	name: string;
+	city: string | null;
+	when: string | null;
+	price: string | null;
+	available: number | null;
+	maxPerOrder: number | null;
+	url: string;
+} | null> {
+	const found = await searchEvents({ q: search, limit: 50 });
+	const mine = found
+		.filter((e) => e.nextDate && strip(e.name).includes(strip(match)))
+		.sort((a, b) => (a.nextDate ?? "").localeCompare(b.nextDate ?? ""));
+
+	const e = mine[0];
+	if (!e) return null;
+
+	let when: string | null = null;
+	let available: number | null = null;
+	let maxPerOrder: number | null = null;
+	try {
+		const a = await getAvailability(e.slug);
+		const d = a.dates[0];
+		if (d) {
+			when = dateInTz(d.startsAt, d.timezone);
+			const t = d.ticketTypes.find((x) => !x.soldOut) ?? d.ticketTypes[0];
+			if (t) {
+				available = t.available;
+				maxPerOrder = t.maxPerOrder;
+			}
+		}
+	} catch {
+		when = e.nextDate ? dateInTz(e.nextDate, "America/Bogota") : null;
+	}
+
+	return {
+		slug: e.slug,
+		name: e.name,
+		city: e.city,
+		when,
+		price: e.priceFrom !== null ? money(e.priceFrom, e.currency) : null,
+		available,
+		maxPerOrder,
+		url: eventUrl(e.slug),
+	};
+}

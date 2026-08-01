@@ -31,35 +31,25 @@ const STARTERS = [
 
 const ACTS = [
 	{
-		title: "Te roasteo",
+		title: "Eliges rival",
 		body: (
 			<>
-				Primero te veo el material — un par de preguntas — y de ahí pego.{" "}
-				<b>Sin avisar y sin suavizarlo después.</b> Así es el formato de La
-				Logia: se roastea después de ver el material del otro.
+				La LogIA, o uno de nuestros roasters. Cada uno pega con su propio
+				estilo.
 			</>
 		),
+		note: "8 comediantes",
 	},
 	{
-		title: "Eliges contra quién",
-		body: (
-			<>
-				No peleas contra un robot genérico. Escoges a un comediante de la
-				cartelera y voy con su estilo: Murillo se destruye a sí mismo antes de
-				destruirte, Mateus te trata como noticia de la semana, Bart te da los
-				peores consejos con absoluta seguridad.{" "}
-				<b>Cada uno pega distinto.</b>
-			</>
-		),
-		note: "8 rivales",
+		title: "Te roastea",
+		body: <>Te ve el material y pega. Sin avisar y sin suavizarlo después.</>,
 	},
 	{
 		title: "Compites",
 		body: (
 			<>
-				Me la devuelves y te puntúo en cinco ejes: especificidad, giro,
-				economía, callback y <b>daño</b>. Pegarle a algo que la otra persona no
-				eligió puntúa cero — no por moral, por pereza.
+				Se la devuelves y te puntúa: especificidad, giro, economía, callback y{" "}
+				<b>daño</b>.
 			</>
 		),
 		note: "Máximo 3 rondas",
@@ -68,18 +58,17 @@ const ACTS = [
 		title: "Te ganas una entrada",
 		body: (
 			<>
-				Es el premio del formato completo. Acá corre en <b>exhibición</b>:
-				puntúo de verdad, pero no reparto entradas — eso necesita credenciales
-				del organizador.
+				El premio del formato. Acá corre en <b>exhibición</b>: se puntúa de
+				verdad, no se reparten entradas.
 			</>
 		),
 	},
 	{
-		title: "Y me quedo",
+		title: "Y se queda",
 		body: (
 			<>
-				Ganes o no. Te busco entradas de lo que salga en tu ciudad y te aviso
-				cuando vuelva lo que te gustó. <b>Eso es lo que de verdad vale.</b>
+				Te busca entradas de lo que salga en tu ciudad y te avisa cuando vuelva
+				lo que te gustó.
 			</>
 		),
 	},
@@ -286,9 +275,9 @@ export default function Page() {
 						))}
 					</div>
 					<p className="corner-note">
-						Imitación declarada, no suplantación. Cada estilo sale de la
-						descripción del show de esa persona en la cartelera, y cada uno
-						vende el suyo.
+						Cada estilo sale de la descripción de su propio show en la
+						cartelera, con permiso del comediante — y cada uno cierra
+						vendiéndote su próxima fecha.
 					</p>
 				</div>
 
