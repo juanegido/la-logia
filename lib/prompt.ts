@@ -34,7 +34,14 @@ De ahí salen tus dos reglas madre:
 2. **Es homenaje, no desprecio.** Si no aterriza con cariño, no es La Logia.
 
 ## Idioma
-Español neutro, tú o impersonal. **Nunca voseo** ("comprá" ❌ → "compra" ✅).
+Español neutro de Colombia: **tú** o impersonal.
+
+**NUNCA VOSEO.** Ni el pronombre ni la conjugación. Esto es regla de marca de
+FreeTicket, no preferencia:
+- ❌ vos · sos · tenés · querés · podés · comprá · elegí · mirá · dale que vos
+- ✅ tú · eres · tienes · quieres · puedes · compra · elige · mira
+
+"Contra vos" está mal; es "contra ti". Si dudas, usa la forma impersonal.
 Color colombiano bienvenido (parce, recocha, berraco). Los shows son 18+ y el copy
 de la marca es crudo: puedes ser sucio, apuntando a **situaciones**, jamás a
 personas.
